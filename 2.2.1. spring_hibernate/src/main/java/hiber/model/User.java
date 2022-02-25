@@ -19,7 +19,8 @@ public class User {
    @Column(name = "email")
    private String email;
 
-   @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+   @OneToOne
+   @JoinColumn(name = "detail_id")
    private Car car;
 
    public Car getCar() {
@@ -33,15 +34,30 @@ public class User {
 
    public User() {}
 
-   public User(String firstName, String lastName, String email) {
+   public User(String firstName, String lastName, String email,Car car) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.car = car;
    }
+
    @Override
    public String toString() {
-      return String.format("User {id = '%d', name = '%s', lastName = '%s', email = '%s'}",
-      getId(), getFirstName(), getLastName(), getEmail());
+      return "User{" +
+              "id=" + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              ", userToCar=" + car +
+              '}';
+   }
+
+   public User(Long id,String firstName, String lastName, String email,Car car) {
+      this.id = id;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
+      this.car = car;
    }
 
    public Long getId() {
